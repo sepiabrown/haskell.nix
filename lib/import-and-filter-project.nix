@@ -15,7 +15,8 @@ let
   projectSubDir' =  src.origSubDir or "";                                     # With leading /
   projectSubDir = pkgs.lib.strings.removePrefix "/" projectSubDir';          # Without /
   projectSubDir'' = if projectSubDir == "" then "" else projectSubDir + "/"; # With trailing /
-  project = pkgs.lib.info "${projectNix} ____added with____ ${projectSubDir'}" (import "${projectNix}${projectSubDir'}");
+  project = import "${projectNix}${projectSubDir'}";
+  #project = pkgs.lib.info "${projectNix} ____added with____ ${projectSubDir'}" (import "${projectNix}${projectSubDir'}");
 in project // {
     extras = hackage: let old = (project.extras hackage).packages; in {
       packages = pkgs.lib.attrsets.mapAttrs (name: value:
