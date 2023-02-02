@@ -12,7 +12,7 @@ let
     filter = src.filter or (_: _: true);
   };
   # The sub directory containing the cabal.project or stack.yaml file
-  projectSubDir' = pkgs.lib.warn "${projectNix}" (src.origSubDir or "");                                     # With leading /
+  projectSubDir' = pkgs.lib.info "${projectNix}" (src.origSubDir or "");                                     # With leading /
   projectSubDir = pkgs.lib.strings.removePrefix "/" projectSubDir';          # Without /
   projectSubDir'' = if projectSubDir == "" then "" else projectSubDir + "/"; # With trailing /
   project = import "${projectNix}${projectSubDir'}";
