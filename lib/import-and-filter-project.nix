@@ -12,10 +12,10 @@ let
     filter = src.filter or (_: _: true);
   };
   # The sub directory containing the cabal.project or stack.yaml file
-  projectSubDir' = src.origSubDir or "";                                     # With leading /
+  projectSubDir' = pkgs.lib.warn "${projectNix}"; #src.origSubDir or "";                                     # With leading /
   projectSubDir = pkgs.lib.strings.removePrefix "/" projectSubDir';          # Without /
   projectSubDir'' = if projectSubDir == "" then "" else projectSubDir + "/"; # With trailing /
-  project = pkgs.lib.warn "${projectNix}"; #import "${projectNix}${projectSubDir'}";
+  project = import "${projectNix}${projectSubDir'}";
 in project // {
     extras = hackage: let old = (project.extras hackage).packages; in {
       packages = pkgs.lib.attrsets.mapAttrs (name: value:
